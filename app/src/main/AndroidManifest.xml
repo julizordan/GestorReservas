@@ -1,0 +1,27 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="es.unizar.eina.gestorReservas">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Notepadv3">
+
+        <activity
+            android:name="es.unizar.eina.gestorReservas.GestorHabitacion"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="es.unizar.eina.gestorReservas.HabitacionEdit" />
+        <activity android:name="es.unizar.eina.gestorReservas.GestorReservas" />
+        <activity android:name="es.unizar.eina.gestorReservas.ReservasEdit" />
+
+    </application>
+
+</manifest>

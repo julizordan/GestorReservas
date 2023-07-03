@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Notepadv3</string>
+    <string name="no_notes">No Notes Yet</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_insert">Add Note</string>
+    <string name="menu_delete">Delete Note</string>
+    <string name="menu_edit">Edit Note</string>
+    <string name="title">Title</string>
+    <string name="body">Body</string>
+    <string name="confirm">Confirm</string>
+    <string name="edit_note">Edit Note</string>
+    <string name="title_activity_note_edit">EditNote</string>
+
+    <!-- Habitaciones -->
+    <string name="habitacion_edit">Edit Habitacion</string>
+    <string name="id_hab">ID habitación:</string>
+    <string name="descripcion_hab">Descripción:</string>
+    <string name="max_ocupantes">Número de ocupantes:</string>
+    <string name="porcentaje_recargo">Porcentaje de recargo:</string>
+    <string name="precio_noche">Precio por noche:</string>
+
+    <!-- Reservas -->
+    <string name="reserva_edit">Edit Reserva</string>
+    <string name="id_reserva">ID reserva:</string>
+    <string name="nombre_cliente">Nombre de cliente:</string>
+    <string name="numero_cliente">Número móvil del cliente:</string>
+    <string name="fecha_entrada">Fecha de entrada:</string>
+    <string name="fecha_salida">Fecha de salida:</string>
+    <string name="precio_total">Precio total</string>
+    <string name="lista_habitaciones">Lista:</string>
+
+    <!-- GestorHabitacion -->
+    <string name="habInsert">Insertar Habitacion:</string>
+    <string name="orderId">Ordenar por identificador:</string>
+    <string name="orderOcupantes">Ordenar por número máximo de ocupantes:</string>
+    <string name="orderPrecio">Ordenar de mayor a menor precio:</string>
+    <string name="orderID">Ordenar por ID:</string>
+    <string name="deleteHab">Eliminar Habitacion:</string>
+    <string name="editHab">Editar por ID:</string>
+    <string name="verHabitacion">Ver Habitacion</string>
+
+
+    <!-- GestorReservas -->
+    <string name="reservasInsert">Insertar Reservas:</string>
+    <string name="verReservas">Ver Reservas</string>
+    <string name="ordernombreCliente">Ordenar por nombre:</string>
+    <string name="ordertelefonoCLiente">Ordenar por telefono:</string>
+    <string name="orderfechaECLiente">Ordenar por fecha Entrada:</string>
+    <string name="deleteRes">Eliminar Reserva:</string>
+    <string name="editRes">Editar por ID:</string>
+    <string name="sendRes">Enviar reserva:</string>
+
+
+</resources>
