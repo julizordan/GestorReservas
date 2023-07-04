@@ -49,6 +49,6 @@
     <string name="deleteRes">Eliminar Reserva:</string>
     <string name="editRes">Editar por ID:</string>
     <string name="sendRes">Enviar reserva:</string>
-
-
+    <string name="sendWas">Enviar por Whatsapp:</string>
+    <string name="mensaje">Mensaje</string>
 </resources>

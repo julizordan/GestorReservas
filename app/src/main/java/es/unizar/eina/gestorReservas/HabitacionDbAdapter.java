@@ -128,6 +128,13 @@ public class HabitacionDbAdapter {
                 null, null, null, null, null);
     }
 
+
+    public Cursor obtenerPrecioHabitacion(long idHabitacion) {
+        return mDb.query(DATABASE_TABLE, new String[] {HAB_PRECIO_NOCHE},
+                HAB_ID + " = ?", new String[] {String.valueOf(idHabitacion)}, null, null, null);
+    }
+
+
     /**
      * Return a Cursor positioned at the note that matches the given rowId
      *

@@ -18,6 +18,7 @@ public class GestorReservas extends AppCompatActivity {
     private static final int ACTIVITY_CREATE_RESERVA = 0;
     private static final int ACTIVITY_EDIT_RESERVA = 1;
     private static final int ACTIVITY_HABITACION = 3;
+    private static final int ACTIVITY_SEND_RESERVA = 4;
 
     private static final int INSERT_ID = Menu.FIRST;
     private static final int DELETE_ID = Menu.FIRST + 1;
@@ -146,10 +147,10 @@ public class GestorReservas extends AppCompatActivity {
                 info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
                 editReserva(info.position, info.id);
                 return true;
-            /*case SEND_ID:
+            case SEND_ID:
                 info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-                //sendReserva(info.position, info.id);
-                return true;*/
+                sendReserva(info.position, info.id);
+                return true;
         }
         return super.onContextItemSelected(item);
     }
@@ -170,11 +171,11 @@ public class GestorReservas extends AppCompatActivity {
         startActivityForResult(i, ACTIVITY_HABITACION);
     }
 
-    /*protected void sendReserva(int position, long id) {
+    private void sendReserva(int position, long id) {
         Intent i = new Intent(this, ReservaSend.class);
         i.putExtra(ReservasDbAdapter.RESERVA_ID, id);
-        startActivityForResult(i, ACTIVITY_EDIT);
-    }*/
+        startActivityForResult(i, ACTIVITY_SEND_RESERVA);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {

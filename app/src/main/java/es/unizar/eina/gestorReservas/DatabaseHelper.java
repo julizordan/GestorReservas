@@ -7,7 +7,7 @@ import android.util.Log;
 
 class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "debGestorReservas";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 6;
 
     private static final String TAG = "DatabaseHelper";
 
@@ -21,10 +21,10 @@ class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_CREATE_RESERVA =
             "create table reserva (_id integer primary key autoincrement, "+
                     " nombre_cliente text not null, telefono_cliente text not null,"+
-                    " fecha_entrada date not null,fecha_salida date not null);";
+                    " fecha_entrada text not null,fecha_salida text not null);";
     private static final String DATABASE_CREATE_INFOHABITACION =
             "create table infoHabitacion (id_habitacion integer not null, id_reserva integer not null, " +
-                    " precioCompra double not null, ocupantesHabitacion integer not null," +
+                    " precioCompra double not null, cantidadNoches integer not null," +
                     " foreign key(id_habitacion) references habitacion(_id), " +
                     " foreign key(id_reserva) references reserva(_id) ON DELETE CASCADE);";
 
