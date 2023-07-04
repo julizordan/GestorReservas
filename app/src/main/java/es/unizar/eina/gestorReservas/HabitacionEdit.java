@@ -91,33 +91,24 @@ public class HabitacionEdit extends AppCompatActivity {
             e.printStackTrace();
             return;
         }
-        Log.d("HabitacionEdit", "New ID: " + newID);
-        Log.d("HabitacionEdit", "Descripción: " + descripcion);
-        Log.d("HabitacionEdit", "Máx. Ocupantes: " + max_ocupantes);
-        Log.d("HabitacionEdit", "Precio Noche: " + precioNoche);
-        Log.d("HabitacionEdit", "Porcentaje Recargo: " + porcentaje);
-        Log.d("HabitacionEdit", "RowId: " + mRowId);
 
         if (mRowId == null) {
-            // Crear nueva habitación solo si es una nueva inserción
             long id = mDbHelper.createHabitacion(newID, descripcion, max_ocupantes, precioNoche, porcentaje);
             if (id > 0) {
                 mRowId = id;
-                Log.d("HabitacionEdit", "Habitación guardada con éxito. ID: " + id);
+                Toast.makeText(this, "Habitación guardada con éxito. ID: " + id, Toast.LENGTH_SHORT).show();
             } else {
-                Log.d("HabitacionEdit", "Error al guardar la habitación.");
+                Toast.makeText(this, "Error al guardar la habitación", Toast.LENGTH_SHORT).show();
             }
         } else if (!newID.equals(String.valueOf(mRowId))) {
-            // Mostrar mensaje de error solo si el nuevo ID no coincide con el ID existente
             Toast.makeText(this, "No se puede modificar el ID de una habitación existente", Toast.LENGTH_SHORT).show();
             return;
         } else {
-            // Actualizar la habitación solo si ya existe
             boolean updated = mDbHelper.updateHabitacion(mRowId, descripcion, max_ocupantes, precioNoche, porcentaje);
             if (updated) {
-                Log.d("HabitacionEdit", "Habitación actualizada con éxito. ID: " + mRowId);
+                Toast.makeText(this, "Habitación actualizada con éxito", Toast.LENGTH_SHORT).show();
             } else {
-                Log.d("HabitacionEdit", "Error al actualizar la habitación. ID: " + mRowId);
+                Toast.makeText(this, "Error al guardar la habitación", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -157,30 +157,31 @@ public class ReservasEdit extends AppCompatActivity {
         }
 
         if (!isReservaCreated) { // Si la reserva no se ha creado, ejecutar la lógica de actualización
-            mDbHelper.deleteInfoReserva(mRowId);
-            Log.d("RESERVAS", "entro en el else");
-            mDbHelper.updateReserva(mRowId, nombreCliente, numeroCliente, fechaEntrada, fechaSalida);
-            Toast.makeText(this, "Reserva actualizada con éxito", Toast.LENGTH_SHORT).show();
-
             List<Long> habitacionesSeleccionadas = getHabitacionesSeleccionadas();
             StringBuilder infoReservaTextoBuilder = new StringBuilder();
+            if(habitacionesSeleccionadas.size() > 0){
+                mDbHelper.deleteInfoReserva(mRowId);
+                for (Long idHabitacion : habitacionesSeleccionadas) {
+                    noches = mDbHelper.contarNoches(fechaEntrada, fechaSalida);
+                    Cursor cursor = mDbHelperHabitacion.obtenerPrecioHabitacion(idHabitacion);
+                    if (cursor.moveToFirst()) {
+                        double precioNoche = cursor.getDouble(cursor.getColumnIndex(HabitacionDbAdapter.HAB_PRECIO_NOCHE));
+                        precioTotal = precioNoche * noches;
+                        mDbHelper.updateInfoReserva(mRowId, idHabitacion, (int) noches, precioTotal);
 
-            for (Long idHabitacion : habitacionesSeleccionadas) {
-                noches = mDbHelper.contarNoches(fechaEntrada, fechaSalida);
-                Cursor cursor = mDbHelperHabitacion.obtenerPrecioHabitacion(idHabitacion);
-                if (cursor.moveToFirst()) {
-                    double precioNoche = cursor.getDouble(cursor.getColumnIndex(HabitacionDbAdapter.HAB_PRECIO_NOCHE));
-                    Log.d("RESERVAS", "precioNoche" + precioNoche);
-                    precioTotal = precioNoche * noches;
-                    Log.d("RESERVAS", "precioTotal" + precioTotal);
-                    mDbHelper.updateInfoReserva(mRowId, idHabitacion, (int) noches, precioTotal);
-
-                    // Agregar información de la reserva actual al texto
-                    String infoReservaActual = "ID Habitación: " + idHabitacion + "\n" + "ID Reserva: " + mRowId + "\n" + "Precio Compra: " + precioTotal + "\n" + "Numero de noches: " + noches + "\n" + "-------------------------\n";
-                    infoReservaTextoBuilder.append(infoReservaActual);
+                        // Agregar información de la reserva actual al texto
+                        String infoReservaActual = "ID Habitación: " + idHabitacion + "\n" + "ID Reserva: " + mRowId + "\n" + "Precio Compra: " + precioTotal + "\n" + "Numero de noches: " + noches + "\n" + "-------------------------\n";
+                        infoReservaTextoBuilder.append(infoReservaActual);
+                    }
+                    cursor.close();
                 }
-                cursor.close();
+                mDbHelper.updateReserva(mRowId, nombreCliente, numeroCliente, fechaEntrada, fechaSalida);
+                Toast.makeText(this, "Reserva actualizada con éxito", Toast.LENGTH_SHORT).show();
+
+            }else{
+                Toast.makeText(this, "Debes seleccionar al menos una habitación para poder modificar la reserva", Toast.LENGTH_SHORT).show();
             }
+
 
             infoReservaActual = infoReservaTextoBuilder.toString();
             infoReservaTextView.setText(infoReservaActual);

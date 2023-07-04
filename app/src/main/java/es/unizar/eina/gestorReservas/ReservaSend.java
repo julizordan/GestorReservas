@@ -26,12 +26,14 @@ public class ReservaSend extends AppCompatActivity {
     private String mensaje;
 
     private class InfoHabitacion {
+        public String id_hab;
         public String descripcion;
         public Double precioNoche;
         public Double porcentaje_recargo;
         public Integer MAX_OCUPANTES;
 
-        public InfoHabitacion(String descripcion, Double precioNoche, Double porcentaje_recargo, Integer MAX_OCUPANTES) {
+        public InfoHabitacion(String id_hab, String descripcion, Double precioNoche, Double porcentaje_recargo, Integer MAX_OCUPANTES) {
+            this.id_hab = id_hab;
             this.descripcion = descripcion;
             this.precioNoche = precioNoche;
             this.porcentaje_recargo = porcentaje_recargo;
@@ -98,48 +100,48 @@ public class ReservaSend extends AppCompatActivity {
     }
 
     private void setUpMessage(){
+        Integer noches = 0;
         Cursor reserva = mDbHelper.fetchReserva(mRowId);
         startManagingCursor(reserva);
+        long reserva_id = reserva.getLong(reserva.getColumnIndexOrThrow(ReservasDbAdapter.RESERVA_ID));
         String nombre_cliente = reserva.getString(reserva.getColumnIndexOrThrow(ReservasDbAdapter.RESERVA_NOMBREC));
         telefonoCliente = reserva.getString(reserva.getColumnIndexOrThrow(ReservasDbAdapter.RESERVA_TELEFONO_CLIENTE));
         String fecha_entrada = reserva.getString(reserva.getColumnIndexOrThrow(ReservasDbAdapter.RESERVA_FECHAE));
         String fecha_salida = reserva.getString(reserva.getColumnIndexOrThrow(ReservasDbAdapter.RESERVA_FECHAS));
 
-
-
-        // Productos
-        ArrayList<InfoHabitacion> habitacion = new ArrayList<InfoHabitacion>();
-        double pesoTotal = 0.0;
+        // Reservas
+        ArrayList<InfoHabitacion> habitacion = new ArrayList<>();
         double precioTotal = 0.0;
 
-        Cursor hab = mDbHelper.obtenerHabitacionesDeReserva(mRowId);
-        while (!hab.isAfterLast()){
-            String nombre = hab.getString(hab.getColumnIndex(PedidoDbAdapter.KEY_NOMBRE_PRODUCTO));
-            Double peso = hab.getDouble(hab.getColumnIndex(PedidoDbAdapter.KEY_PESO_PRODUCTO));
-            Double precio = hab.getDouble(hab.getColumnIndex(PedidoDbAdapter.KEY_PRECIO_PRODUCTO));
-            Integer cantidad = hab.getInt(hab.getColumnIndex(PedidoDbAdapter.KEY_CANTIDAD));
+        Cursor hab = mDbHelper.obtenerHabitacionesDeReserva(reserva_id);
+        while (hab.moveToNext()){
+            String id = hab.getString(hab.getColumnIndex(ReservasDbAdapter.RELACION_ID_HAB));
+            Double precioReserva = hab.getDouble(hab.getColumnIndex(ReservasDbAdapter.RELACION_PRECIO_TOTAL));
+            noches = hab.getInt(hab.getColumnIndex(ReservasDbAdapter.RELACION_NUM_NOCHES));
 
-            habitacion.add(new InfoProd(nombre, peso, precio, cantidad));
+            Integer ocupantes = hab.getInt(hab.getColumnIndex(HabitacionDbAdapter.HAB_MAX_OCUPANTES));
+            Double porcentaje_recargo = hab.getDouble(hab.getColumnIndex(HabitacionDbAdapter.HAB_PORCENTAJE));
+            Double precio = hab.getDouble(hab.getColumnIndex(HabitacionDbAdapter.HAB_PRECIO_NOCHE));
+            String descripcion = hab.getString(hab.getColumnIndex(HabitacionDbAdapter.HAB_DESCRIPCION));
 
-            pesoTotal += peso * cantidad;
-            precioTotal += precio * cantidad;
+            habitacion.add(new InfoHabitacion(id, descripcion, precio, porcentaje_recargo, ocupantes));
 
-            hab.moveToNext();
+            precioTotal += precioReserva;
         }
 
-
-        mensaje = "Su reserva ya esta confirmada" +
-                "\nCliente: " + nombre_cliente +
-                "\nTelefono de contacto: " + telefonoCliente +
-                "\nFecha de entrega estimada: " + fecha_entrada +
-                "\nPeso total: " + Double.toString(pesoTotal) + "kg" +
-                "\nPrecio total: " +  Double.toString(precioTotal) + "€" +
-                "\nLista de productos:" +
-                "\n\tNombre\t-\tPeso(kg)\t-\tPrecio(€)\t-\tCantidad" ;
-        for ( InfoHabitacion a: habitacion) {
-            mensaje += "\n\t"+ a.nombre +"\t-\t"+ a.peso +"\t-\t"+ a.precio +"\t-\t"+ a.cantidad;
+        StringBuilder mensaje = new StringBuilder();
+        mensaje.append("Su reserva ya está confirmada\n");
+        mensaje.append("Cliente: ").append(nombre_cliente).append("\n");
+        mensaje.append("Teléfono de contacto: ").append(telefonoCliente).append("\n");
+        mensaje.append("Fecha de entrada: ").append(fecha_entrada).append("\n");
+        mensaje.append("Fecha de salida: ").append(fecha_salida).append("\n");
+        mensaje.append("Numero de noches: ").append(noches).append("\n");
+        mensaje.append("Precio total: ").append(String.format("%.2f", precioTotal)).append("€\n");
+        mensaje.append("Lista de habitaciones:\n");
+        for (InfoHabitacion a : habitacion) {
+            mensaje.append("\t").append("ID: "+ a.id_hab).append("\t-\t").append("Precio noche: "+ a.precioNoche).append("\t-\t").append("Recargo: "+ a.porcentaje_recargo).append("\t-\n").append("Max Ocupantes: "+a.MAX_OCUPANTES).append("\t-\n").append("Descripcion: "+a.descripcion).append("\n\n");
         }
-
+        this.mensaje = mensaje.toString();
     }
     private void send(String method){
         SendAbstraction sender = new SendAbstractionImpl(this, method);
@@ -147,14 +149,4 @@ public class ReservaSend extends AppCompatActivity {
 
     }
 
-    int getInt(String str){
-        if(str.equals("")){
-            return 0;
-        }
-        else {
-            return Integer.parseInt(str);
-        }
-    }
-
-}
 }

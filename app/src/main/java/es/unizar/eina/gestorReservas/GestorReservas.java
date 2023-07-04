@@ -96,7 +96,7 @@ public class GestorReservas extends AppCompatActivity {
         boolean result = super.onCreateOptionsMenu(menu);
         menu.add(Menu.NONE, ACTIVITY_VER_HABITACION, Menu.NONE, R.string.verHabitacion);
         menu.add(Menu.NONE, INSERT_ID, Menu.NONE, R.string.reservasInsert);
-        menu.add(Menu.NONE, NOMBRE_CLIENTE, Menu.NONE, R.string.orderOcupantes);
+        menu.add(Menu.NONE, NOMBRE_CLIENTE, Menu.NONE, R.string.ordernombreCliente);
         menu.add(Menu.NONE, TELEFONO, Menu.NONE, R.string.ordertelefonoCLiente);
         menu.add(Menu.NONE, FECHA_ENTRADA, Menu.NONE, R.string.orderfechaECLiente);
         return result;

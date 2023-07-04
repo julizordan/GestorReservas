@@ -21,6 +21,7 @@
         <activity android:name="es.unizar.eina.gestorReservas.HabitacionEdit" />
         <activity android:name="es.unizar.eina.gestorReservas.GestorReservas" />
         <activity android:name="es.unizar.eina.gestorReservas.ReservasEdit" />
+        <activity android:name="es.unizar.eina.gestorReservas.ReservaSend" />
 
     </application>
 
