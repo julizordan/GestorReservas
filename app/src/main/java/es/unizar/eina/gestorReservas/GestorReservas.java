@@ -28,6 +28,10 @@ public class GestorReservas extends AppCompatActivity {
     public static final int NOMBRE_CLIENTE = Menu.FIRST + 5;
     public static final int TELEFONO = Menu.FIRST + 6;
     public static final int FECHA_ENTRADA = Menu.FIRST + 7;
+    private static final int TEST_SOBRECARGA = Menu.FIRST + 8;
+    private static final int TEST_CAJA_NEGRA = Menu.FIRST + 9;
+    /*private static final int TEST_VOLUMEN_INI_ID = Menu.FIRST + 9;
+    private static final int TEST_VOLUMEN_FIN_ID = Menu.FIRST + 10;*/
 
     private ReservasDbAdapter mDbHelper;
     private Cursor mNotesCursor;
@@ -99,6 +103,8 @@ public class GestorReservas extends AppCompatActivity {
         menu.add(Menu.NONE, NOMBRE_CLIENTE, Menu.NONE, R.string.ordernombreCliente);
         menu.add(Menu.NONE, TELEFONO, Menu.NONE, R.string.ordertelefonoCLiente);
         menu.add(Menu.NONE, FECHA_ENTRADA, Menu.NONE, R.string.orderfechaECLiente);
+        menu.add(Menu.NONE, TEST_SOBRECARGA, Menu.NONE, R.string.testSobrecarga);
+        menu.add(Menu.NONE, TEST_CAJA_NEGRA, Menu.NONE, R.string.testCajaNegra);
         return result;
     }
 
@@ -122,6 +128,12 @@ public class GestorReservas extends AppCompatActivity {
             case FECHA_ENTRADA:
                 order = ReservasDbAdapter.RESERVA_FECHAE;
                 fillData();
+                return true;
+            case TEST_SOBRECARGA:
+                Test.testSobrecarga(this);
+                return true;
+            case TEST_CAJA_NEGRA:
+                Test.testCajaNegraHabitaciones(this);
                 return true;
         }
         return super.onOptionsItemSelected(item);

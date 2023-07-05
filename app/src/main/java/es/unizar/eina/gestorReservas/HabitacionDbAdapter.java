@@ -70,7 +70,7 @@ public class HabitacionDbAdapter {
      */
     public long createHabitacion(String id, String descripcion, Integer MAX_OCUPANTES,
                                  Double precioNoche, Double porcentaje_recargo) {
-        if (id.isEmpty() || id == null || descripcion.isEmpty() || descripcion == null || MAX_OCUPANTES == null
+        if (id == null || id.isEmpty() || !id.matches("\\d+") || descripcion == null || descripcion.isEmpty() || MAX_OCUPANTES == null
                 || precioNoche == null || porcentaje_recargo == null || precioNoche < 0 || MAX_OCUPANTES <= 0 || MAX_OCUPANTES > 10 ) {
             return -1;
         }
@@ -84,14 +84,16 @@ public class HabitacionDbAdapter {
         return mDb.insert(DATABASE_TABLE, null, initialValues);
     }
 
+    public long deleteAllHabitaciones(){
+        return mDb.delete(DATABASE_TABLE, null, null);
+    }
 
-
-    /**
-     * Delete the note with the given rowId
-     *
-     * @param rowId id of note to delete
-     * @return true if deleted, false otherwise
-     */
+     /**
+      * Delete the note with the given rowId
+      *
+      * @param rowId id of note to delete
+      * @return true if deleted, false otherwise
+      */
     public boolean deleteHabitacion(long rowId) {
         if (rowId < 1){
             return  false;
@@ -164,8 +166,8 @@ public class HabitacionDbAdapter {
      * values passed in
      */
     public boolean updateHabitacion(long rowId, String descripcion, Integer MAX_OCUPANTES, Double precioNoche, Double porcentaje_recargo) {
-        if (rowId < 1 || descripcion == null || descripcion.isEmpty() || MAX_OCUPANTES == null || precioNoche == null
-                || porcentaje_recargo == null || precioNoche < 0 || MAX_OCUPANTES <= 0 || MAX_OCUPANTES > 10) {
+        if (rowId < 1 || descripcion == null || descripcion.isEmpty() || MAX_OCUPANTES == null
+                || precioNoche == null || porcentaje_recargo == null || precioNoche < 0 || MAX_OCUPANTES <= 0 || MAX_OCUPANTES > 10 ) {
             return false;
         }
 

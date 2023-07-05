@@ -4,7 +4,6 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,7 +25,6 @@ public class ReservasEdit extends AppCompatActivity {
     private EditText numeroCliente;
     private EditText fechaEntrada;
     private EditText fechaSalida;
-    private EditText precio;
 
     private Long mRowId;
     private HabitacionDbAdapter mDbHelperHabitacion;

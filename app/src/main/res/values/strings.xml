@@ -51,4 +51,8 @@
     <string name="sendRes">Enviar reserva:</string>
     <string name="sendWas">Enviar por Whatsapp:</string>
     <string name="mensaje">Mensaje</string>
+
+    <!-- Tests -->
+    <string name="testSobrecarga">Test de Sobrecarga</string>
+    <string name="testCajaNegra">Test de caja negra</string>
 </resources>
