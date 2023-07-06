@@ -56,11 +56,14 @@ public class Test {
         HabitacionDbAdapter habitacionDbAdapter = new HabitacionDbAdapter(ctx);
         habitacionDbAdapter.open();
 
+        habitacionDbAdapter.deleteAllHabitaciones();
+
         int numHabitaciones = 100000; // Número de habitaciones a crear
         int maxOcupantes = 1;
         double precioNoche = 100.0;
         double porcentajeRecargo = 0.1;
         long tiempoInicio = System.currentTimeMillis();
+
 
         for (int i = 1; i <= numHabitaciones; i++) {
             String id = String.valueOf(i);
