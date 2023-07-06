@@ -2,16 +2,29 @@ package es.unizar.eina.gestorReservas;
 
 import android.content.Context;
 
+import java.util.Random;
+
 public class Test {
 
-    public static void crearHabPredefinidas(Context ctx) {
+    public static void ajustesPredeterminados(Context ctx) {
+        Random rand = new Random();
         HabitacionDbAdapter habitacionDbAdapter = new HabitacionDbAdapter(ctx);
+        ReservasDbAdapter reservasDbAdapter = new ReservasDbAdapter(ctx);
         habitacionDbAdapter.open();
+        reservasDbAdapter.open();
 
-        // Crear varias habitaciones para probar la sobrecarga
         int maxOcupantes = 1;
         double precioNoche = 100.0;
         double porcentajeRecargo = 0.1;
+
+        String nombreCliente = "Juliana";
+        String telefonoCliente = "653456787";
+        String fechaEntrada = "24/05/2023";
+        String fechaSalida = "29/05/2023";
+
+        reservasDbAdapter.deleteAllInfoReserva();
+        reservasDbAdapter.deleteAllReservas();
+        habitacionDbAdapter.deleteAllHabitaciones();
 
         for (int i = 1; i <= 4; i++) {
             String id = String.valueOf(i);
@@ -21,13 +34,23 @@ public class Test {
                     precioNoche+100, porcentajeRecargo);
 
             if (resultado != -1) {
-                android.util.Log.d("TestSobrecarga", "Habitación creada exitosamente con ID: " + i);
+                android.util.Log.d("AjustesPred", "Habitación creada exitosamente con ID: " + i);
+                long idReserva = reservasDbAdapter.createReserva(nombreCliente,telefonoCliente,fechaEntrada,fechaSalida);
+                if (idReserva != -1) {
+                    android.util.Log.d("AjustesPred", "Reserva creada exitosamente " + i);
+                    long result = reservasDbAdapter.insertarInfoReserva(idReserva, rand.nextInt(4) + 1, 6, 300);
+                    android.util.Log.d("AjustesPred", "Habitacion reserva creada exitosamente con ID: " + result);
+                } else {
+                    android.util.Log.d("AjustesPred", "Error al crear la Reserva: " + idReserva);
+                    break;
+                }
             } else {
-                android.util.Log.d("TestSobrecarga", "Error al crear la habitación: " + i);
+                android.util.Log.d("AjustesPred", "Error al crear la habitación: " + i);
             }
         }
 
         habitacionDbAdapter.close();
+        reservasDbAdapter.close();
     }
     public static void testSobrecarga(Context ctx) {
         HabitacionDbAdapter habitacionDbAdapter = new HabitacionDbAdapter(ctx);
@@ -161,6 +184,61 @@ public class Test {
         System.out.println("Resultado 19: " + resultado19); // Se espera false debido a que rowId es inválido
 
         habitacionDbAdapter.close();
+    }
+
+    public static void pruebaVolumen(Context ctx) {
+        Random rand = new Random();
+
+        HabitacionDbAdapter habitacionDbAdapter = new HabitacionDbAdapter(ctx);
+        ReservasDbAdapter reservasDbAdapter = new ReservasDbAdapter(ctx);
+        habitacionDbAdapter.open();
+        reservasDbAdapter.open();
+
+        int numHabitaciones = 300;
+        int numReservas = 3000;
+        int maxOcupantes = 1;
+        double precioNoche = 100.0;
+        double porcentajeRecargo = 0.1;
+
+        String nombreCliente = "Juliana";
+        String telefonoCliente = "653456787";
+        String fechaEntrada = "24/05/2023";
+        String fechaSalida = "29/05/2023";
+
+        reservasDbAdapter.deleteAllInfoReserva();
+        reservasDbAdapter.deleteAllReservas();
+        habitacionDbAdapter.deleteAllHabitaciones();
+
+        for (int i = 1; i <= numHabitaciones; i++) {
+            String id = String.valueOf(i);
+            String descripcion = "Habitación número " + i;
+
+            long resultado = habitacionDbAdapter.createHabitacion(id, descripcion, maxOcupantes,
+                    precioNoche, porcentajeRecargo);
+
+            if (resultado != -1) {
+                android.util.Log.d("PruebaVolumen", "Habitación creada exitosamente con ID: " + i);
+            } else {
+                android.util.Log.d("PruebaVolumen>", "Error al crear la habitación: " + i);
+                break;
+            }
+        }
+
+        for (int i = 1; i <= numReservas; i++) {
+            long idReserva = reservasDbAdapter.createReserva(nombreCliente,telefonoCliente,fechaEntrada,fechaSalida);
+            if (idReserva != -1) {
+                android.util.Log.d("PruebaVolumen", "Reserva creada exitosamente " + i);
+                long result = reservasDbAdapter.insertarInfoReserva(idReserva,rand.nextInt(300) + 1, 6, 300);
+                android.util.Log.d("PruebaVolumen", "Habitacion reserva creada exitosamente con ID: " + result);
+
+            } else {
+                android.util.Log.d("PruebaVolumen>", "Error al crear la Reserva: " + idReserva);
+                break;
+            }
+        }
+
+        habitacionDbAdapter.close();
+        reservasDbAdapter.close();
     }
 
 }

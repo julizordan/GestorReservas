@@ -233,6 +233,13 @@ public class ReservasDbAdapter {
     public boolean deleteReserva(long rowId) {
         return mDb.delete(DATABASE_TABLE, RESERVA_ID + "=" + rowId, null) > 0;
     }
+    public boolean deleteAllReservas() {
+        return mDb.delete(DATABASE_TABLE, null, null) > 0;
+    }
+
+    public boolean deleteAllInfoReserva() {
+        return mDb.delete(DATABASE_INFOHABITACION, null, null) > 0;
+    }
 
     public List<String> getInfoHabitacion() {
         List<String> infoHabitaciones = new ArrayList<>();

@@ -55,4 +55,6 @@
     <!-- Tests -->
     <string name="testSobrecarga">Test de Sobrecarga</string>
     <string name="testCajaNegra">Test de caja negra</string>
+    <string name="testPruebaVolumen">Test prueba de volumen</string>
+    <string name="ajustesPredeterminados">Ajustes predeterminados</string>
 </resources>

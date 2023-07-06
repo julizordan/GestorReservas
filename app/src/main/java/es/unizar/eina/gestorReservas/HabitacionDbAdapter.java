@@ -85,6 +85,7 @@ public class HabitacionDbAdapter {
     }
 
     public long deleteAllHabitaciones(){
+
         return mDb.delete(DATABASE_TABLE, null, null);
     }
 
